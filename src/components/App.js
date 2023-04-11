@@ -14,7 +14,6 @@ const btnValues=[
 ]
             
 const App=() => {
-
   return(
     <CalcProvider>
     <Wrapper>

@@ -16,7 +16,6 @@ const getStyleName=btn => {
 const Button=({value}) => {
     const {calc, setCalc}=useContext(CalcContext)
     
-
     //user click comma
     const CommaClick=() => {
         setCalc({

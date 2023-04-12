@@ -6,7 +6,6 @@
   #root {
     height: 100%;
   }
-  
   body {
     background-color: black;
     display: grid;
@@ -32,7 +31,6 @@
     font-size: 3rem;
     padding: 0.2rem 0.7rem 0.1rem 0.5rem;
   }
-
   .buttonBox {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -42,7 +40,6 @@
     flex-direction: row;
     flex-wrap: wrap;
   }
-
   .button {
     background: #e9f0f4;
     height: 5rem;

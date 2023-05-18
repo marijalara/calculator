@@ -1,8 +1,12 @@
-import React, { useContext } from "react";
-import { CalcContext } from "../context/CalcContext";
+import React, {useContext} from 'react';
+import { CalcContext } from '../context/CalcContext';
 
-const getStyleName=btn => {
-    const className={
+interface ButtonProps {
+    value: string | number
+} 
+
+const getStyleName=(btn: string)=> {
+    const className: Record<string, string>={
         '=': 'equals',
         'x': 'opt',
         '-': 'opt',
@@ -13,31 +17,25 @@ const getStyleName=btn => {
     return className[btn]
 }
 
-const Button=({value}) => {
+const Button: React.FC<ButtonProps>= ({value}) => {
     const {calc, setCalc}=useContext(CalcContext)
-    
-    //user click comma
-    const CommaClick=() => {
+
+    const CommaClick =(): void => {
         setCalc({
             ...calc,
-            num: !calc.num.toString().includes('.') ? calc.num + value : calc.num
+            num: !calc.num.toString().includes('.') ? Number(calc.num) + Number(value) : calc.num
         })
     }
-    //user click AC
     const ResetClick=() => {
         setCalc({sign: '', num: 0, res: 0})
     }
-
-    //user click number
     const handleClickButton=() => {
-        const numberString=value.toString() //changes value into string
-
-        //ako vec imamo nulu i onda kada ponovo je pritisnemo da nam ne pise opet nula nego da stoji samo jedna
-        let numberValue
+        const numberString=value.toString() 
+        
+        let numberValue: number
         if(numberString==='0' && calc.num===0) {
-            numberValue="0"
+            numberValue=0
         } else {
-            //a ovo ako imamo recimo 5 i kliknemo 8 da nam pise 58
             numberValue=Number(calc.num + numberString)
         }
         setCalc({
@@ -45,28 +43,24 @@ const Button=({value}) => {
             num: numberValue
         })
     }
-    //user click operation
     const SignClick=() => {
         setCalc({
-            sign: value,
+            sign: value.toString(),
             res: !calc.res && calc.num ? calc.num : calc.res,
             num: 0
         })
     }
-    //user click equals
     const EqualsClick=() => {
-        //kada pritisnemo neki broj i onda jednako nema potrebe da nam racuna zato ce da ide ovaj uslov
-        //i onda cemo tu da prebacimo celu math funkciju
         if(calc.res && calc.num) {
-            const Math=(a, b, sign) => {
-                const result={
-                    '+': (a, b)=> a + b,
-                    '-': (a, b)=> a - b,
-                    'x': (a, b)=> a * b,
-                    '÷': (a, b)=> a / b,
+            const Math=(a: number, b: number, sign: string) => {
+                const result: Record<string, Function>={
+                    '+': (a: number, b: number)=> a + b,
+                    '-': (a: number, b: number)=> a - b,
+                    'x': (a: number, b: number)=> a * b,
+                    '÷': (a: number, b: number)=> a / b,
                 }
                 return result[sign](a, b)
-            }
+        }
         setCalc({
             res: Math(calc.res, calc.num, calc.sign),
             sign: '',
@@ -74,8 +68,6 @@ const Button=({value}) => {
         })
         } 
     }
-
-    //user click presen
     const PresenClick=() => {
         setCalc({
             num: (calc.num /100),
@@ -83,8 +75,6 @@ const Button=({value}) => {
             sign: ''
         })
     }
-
-    //user click invert button
     const InvertClick=() => {
         setCalc({
             num: calc.num ? calc.num * -1 : 0,
@@ -92,10 +82,8 @@ const Button=({value}) => {
             sign: ''
         })
     }
-
     const handleClick=() => {
-        //a ovo se odnosi na kondicional
-        const results={
+        const results: Record<string, Function>={
             '.': CommaClick,
             'AC': ResetClick,
             '÷': SignClick,
@@ -112,8 +100,10 @@ const Button=({value}) => {
             return handleClickButton()
         }
     }
-    return(
-        <button onClick={handleClick} className={`${getStyleName(value)} button`}>{value}</button>
+    return (
+        <button onClick={handleClick} className={`${getStyleName(value.toString())} button`}>
+            {value}
+        </button>
     )
 }
 

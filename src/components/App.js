@@ -30,4 +30,5 @@ const App=() => {
     </CalcProvider>
   )
 }
+
 export default App;

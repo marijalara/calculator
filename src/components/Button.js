@@ -40,7 +40,6 @@ const Button=({value}) => {
             //a ovo ako imamo recimo 5 i kliknemo 8 da nam pise 58
             numberValue=Number(calc.num + numberString)
         }
-
         setCalc({
             ...calc,
             num: numberValue
@@ -67,7 +66,7 @@ const Button=({value}) => {
                     '÷': (a, b)=> a / b,
                 }
                 return result[sign](a, b)
-        }
+            }
         setCalc({
             res: Math(calc.res, calc.num, calc.sign),
             sign: '',
